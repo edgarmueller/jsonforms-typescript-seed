@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>JSON Forms seed</title>
+  <meta charset="UTF-8">
+  <title>JSON Forms seed</title>
 </head>
-<body ng-cloak>
-<jsonforms data="{'some-prop': 1}"></jsonforms>
+
+<body ng-controller="RatingController as vm">
+  <jsonforms data="vm.data" schema="vm.schema"></jsonforms>
 </body>
+
 </html>

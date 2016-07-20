@@ -1,7 +1,6 @@
 
 import "jsonforms";
-import {AbstractControl, ControlRendererTester} from "jsonforms";
-import {IPathResolver} from "jsonforms";
+import {AbstractControl, Testers, schemaTypeIs, schemaPropertyName, PathResolver} from "jsonforms";
 
 class RatingControlDirective implements ng.IDirective {
 
@@ -22,13 +21,13 @@ class RatingControlDirective implements ng.IDirective {
 
 
 class RatingControl extends AbstractControl {
-  static $inject = ['$scope', 'PathResolver'];
-  constructor(scope: ng.IScope, pathResolver: IPathResolver) {
-    super(scope, pathResolver);
+  static $inject = ['$scope'];
+  constructor(scope: ng.IScope) {
+    super(scope);
   }
 
   property(): Object {
-    return this.pathResolver.resolveSchema(this.schema, this.schemaPath);
+    return PathResolver.resolveSchema(this.schema, this.schemaPath);
   }
 
   max(): number {
@@ -44,7 +43,10 @@ class RatingControl extends AbstractControl {
 export default angular
   .module('my', ['jsonforms.renderers.controls'])
   .directive('ratingControl', () => new RatingControlDirective())
-  .run(['RendererService', RendererService => {
-  RendererService.register('rating-control', ControlRendererTester('integer', 101))
-}])
-  .name;
+  .run(['RendererService', RendererService =>
+  RendererService.register('rating-control',
+    Testers.and(
+      schemaTypeIs('integer'),
+      schemaPropertyName('rating')
+      ), 101)
+]).name;

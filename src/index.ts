@@ -1,6 +1,5 @@
 import "angular";
 import "jsonforms";
-import "./sample-control.ts";
 import "./rating-control.ts";
 
 import "bootstrap/dist/css/bootstrap.css";
